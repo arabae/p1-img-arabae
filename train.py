@@ -107,6 +107,7 @@ if __name__ == '__main__':
     parser.add_argument('--val_ratio', type=float, default=0.2, help='ratio for validaton (default: 0.2)')
     parser.add_argument('--loss', type=str, default='cross_entropy',
                                 help='criterion type (cross_entropy, f1, focal, label_smoothing)')
+    parser.add_argument('--smoothing', type=float, default=0.5, help='smoothing scale used for label smoothing loss')
 
     parser.add_argument('--isTrain', type=str2bool, default=True, help='choose Train(true; default) or Test(false)')
     parser.add_argument('--train_dir', type=str, default='./input/data/train/images')
@@ -140,7 +141,7 @@ if __name__ == '__main__':
         elif args.loss == 'focal':
             criterion = FocalLoss()
         elif args.loss == 'label_smoothing':
-            criterion = LabelSmoothingLoss()
+            criterion = LabelSmoothingLoss(smoothing=args.smoothing)
         else:
             raise NameError('Not a loss function available.')
 
